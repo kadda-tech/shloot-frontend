@@ -1,6 +1,16 @@
 # SHLOOT FRONTEND
 
+open putty
+other -> raw
+localhost:5554
 
+auth <token>
+Emulator <token> : k2Ux7TuzaNsEU0p5
+
+geo fix -0.457846 46.3193722
+
+npm start
+npx react-native run-android
 
 ## Getting started
 
