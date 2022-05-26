@@ -7,7 +7,7 @@ const SignUp = ({ navigation }) => {
     <View style={{ justifyContent: 'flex-start', alignItems: 'center', padding: 50 }}>
           <Text style={{alignSelf: 'auto', fontSize: 15, marginBottom: 15 }}>Sign Up</Text>
           <TextInput style={styles.input} placeholder='Username' />
-          <TextInput style={styles.input} placeholder='Password' />
+          <TextInput style={styles.input} placeholder='Password' secureTextEntry={true} />
           <Pressable style={styles.button}>
             <Text style={styles.text}>Sign Up</Text>
           </Pressable>

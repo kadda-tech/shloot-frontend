@@ -1,15 +1,43 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Pressable, StyleSheet, View, Text, TextInput, StatusBar } from 'react-native';
 import { SocialIcon, Divider } from '@rneui/themed';
 
-const Home = ({navigation}) => {
+const SignIn = ({navigation}) => {
 
-  const onPress = () => {
-    alert("login")
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const signInHandler = () => {
+    console.log(email+" "+password)
+
+    fetch('http://10.0.2.2:4001/login', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email,
+        password
+      })
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        console.log("logged in")
+        navigation.navigate('HomePage')
+      } else {
+        console.log("error logging in")
+      }
+    })
+    .catch((error) => {
+      console.log("error logging in");
+      console.error(JSON.stringify(error))
+    });
+
   }
 
-  const signupHandler = () => {
-    navigation.navigate('Signup')
+  const signUpPageHandler = () => {
+    navigation.navigate('SignUp')
   }
 
   return (
@@ -27,9 +55,9 @@ const Home = ({navigation}) => {
         <View style={{ flex:4, justifyContent: 'flex-start', alignItems: 'center', padding: 50, backgroundColor: '#ffffff', borderTopEndRadius
       : 150, borderBottomStartRadius: 150 }}>
           <Text style={{alignSelf: 'auto', fontSize: 15, marginBottom: 15 }}>Welcome back !</Text>
-          <TextInput style={styles.input} placeholder='Username' />
-          <TextInput style={styles.input} placeholder='Password' />
-          <Pressable style={styles.button} onPress={onPress}>
+          <TextInput style={styles.input} placeholder='Email' onChangeText={(value) => setEmail(value)} />
+          <TextInput style={styles.input} placeholder='Password' onChangeText={(value) => setPassword(value)} secureTextEntry={true} />
+          <Pressable style={styles.button} onPress={signInHandler}>
             <Text style={styles.text}>Sign In</Text>
           </Pressable>
         </View>
@@ -46,7 +74,7 @@ const Home = ({navigation}) => {
             <View style={{ flex: 3, width: '100%', alignItems: 'center'}}>
               <Text style={{ fontSize: 14, color: 'gray' }}>Don't have an account ?
                 <Pressable>
-                  <Text style={{ fontWeight: 'bold', fontSize: 17 }} onPress={signupHandler}>&nbsp;&nbsp;Sign Up</Text>
+                  <Text style={{ fontWeight: 'bold', fontSize: 17 }} onPress={signUpPageHandler}>&nbsp;&nbsp;Sign Up</Text>
                 </Pressable>
               </Text>
             </View>
@@ -86,4 +114,4 @@ const styles = StyleSheet.create({
     },
   });
 
-export default Home
+export default SignIn

@@ -16,12 +16,12 @@ const styles = StyleSheet.create({
     },
    });
 
-const[coords, setCoords] = useState({
+const Maps = ({ navigation }) => {
+  
+  const[coords, setCoords] = useState({
     latitude: 0,
     longitude: 0
   });
-
-const Maps = () => {
 
     useEffect(() => {
         Geolocation.getCurrentPosition(
