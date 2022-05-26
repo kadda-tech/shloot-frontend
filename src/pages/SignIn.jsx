@@ -8,7 +8,6 @@ const SignIn = ({navigation}) => {
   const [password, setPassword] = useState('');
 
   const signInHandler = () => {
-    console.log(email+" "+password)
 
     fetch('http://10.0.2.2:4001/login', {
       method: 'POST',
