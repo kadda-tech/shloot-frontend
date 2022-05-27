@@ -12,6 +12,13 @@ geo fix -0.457846 46.3193722
 npm start
 npx react-native run-android
 
+Most visited cities
+Most visited countries
+Most L ph
+Maybe Vid
+
+Interest (se, nat)
+
 ## Getting started
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.

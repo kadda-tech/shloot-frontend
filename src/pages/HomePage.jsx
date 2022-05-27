@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import HomeStack from '../Stacks/HomeStack';
 import Maps from './Maps'
 import { Icon } from '@rneui/base';
+import CameraStack from '../Stacks/CameraStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -39,6 +40,14 @@ const HomePage = ({ navigation }) => {
                 size={24}
             />
         ) }} />
+            <Tab.Screen name="Notification" component={HomeStack} options={{ headerShown: false, tabBarIcon: ({tintColor}) => (
+            <Icon
+                name="favorite"
+                color={tintColor}
+                size={24}
+            />
+        ) }} />
+            <Tab.Screen name="Camera" component={CameraStack} options={{ headerShown: false, tabBarButton: () => null, tabBarVisible: false }} />
         </Tab.Navigator>
   )
 }

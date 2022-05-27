@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import Geolocation from '@react-native-community/geolocation';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Icon } from '@rneui/base';
+import { Camera } from 'react-native-vision-camera';
 
 const styles = StyleSheet.create({
     container: {
@@ -18,7 +20,9 @@ const styles = StyleSheet.create({
 
 const Maps = ({ navigation }) => {
   
-  const[coords, setCoords] = useState({
+  const [cameraGrants, setCameraGrants] = useState(false)
+
+  const [coords, setCoords] = useState({
     latitude: 0,
     longitude: 0
   });
@@ -39,6 +43,24 @@ const Maps = ({ navigation }) => {
         // });
       }, [])
 
+      const cameraHandler = () => {;
+
+        const requestCameraPermission = async () => {
+          setCameraGrants(false)
+          const cameraPermission = await Camera.requestCameraPermission()
+          const cameraPermissionStatus = await Camera.getCameraPermissionStatus()
+          setCameraGrants(cameraPermissionStatus)
+          console.log(cameraPermissionStatus)
+        }
+
+        requestCameraPermission().catch( error => console.log( error ) )
+
+      }
+
+      useEffect(() => {
+        if (cameraGrants === 'authorized') navigation.navigate('Camera')
+      }, [navigation, cameraGrants])
+
     return (
         <View style={styles.container}>
             <MapView
@@ -51,8 +73,24 @@ const Maps = ({ navigation }) => {
                 longitudeDelta: 0.0421,
             }}
             >
-            <Marker coordinate={coords}></Marker>
+              <Marker coordinate={coords}></Marker>
             </MapView>
+            <TouchableOpacity
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: 70,
+                position: 'absolute',
+                bottom: 20,
+                right: 30,
+                height: 70,
+                backgroundColor: '#ffffff78',
+                borderRadius: 100,
+              }}
+              onPress={cameraHandler}
+            >
+              <Icon name='photo-camera' size={30} />
+            </TouchableOpacity>
         </View>
   )
 }
