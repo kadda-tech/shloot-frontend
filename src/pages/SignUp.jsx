@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, View, Text, TextInput } from 'react-native';
 import { SocialIcon, Divider } from '@rneui/themed';
 import { Icon } from '@rneui/base';
 import { useValidation } from 'react-native-form-validator';
+import { API_URL } from '../constants/global';
 
 const SignUp = ({ navigation }) => {
 
@@ -32,7 +33,7 @@ const SignUp = ({ navigation }) => {
   }
 
   const signUpHandler = () => {
-    fetch('http://10.0.2.2:4001/register', {
+    fetch(API_URL + '/register', {
       method: 'POST',
       headers: {
         Accept: 'application/json',

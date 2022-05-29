@@ -5,6 +5,7 @@ import { StyleSheet, TouchableOpacity, View, Image } from 'react-native';
 import { Icon } from '@rneui/base';
 import { Camera } from 'react-native-vision-camera';
 import useAuth from '../hooks/useAuth';
+import { API_URL } from '../constants/global';
 
 const styles = StyleSheet.create({
     container: {
@@ -33,7 +34,7 @@ const Maps = ({ navigation }) => {
   const {authData} = useAuth();
 
     const fetchSpots = (async () => {
-      fetch('http://10.0.2.2:4001/discover', {
+      fetch(API_URL + '/discover', {
       method: 'GET',
       headers: {
         Accept: 'application/json',

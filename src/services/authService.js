@@ -1,7 +1,8 @@
 import { setToken } from "../config/token";
+import { API_URL } from "../constants/global";
 
 const signIn = async (email, password) => {
-    fetch('http://10.0.2.2:4001/login', {
+    fetch(API_URL + '/login', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
