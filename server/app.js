@@ -5,13 +5,70 @@ const User = require("./model/user");
 const auth = require("./middleware/auth");
 const bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
+const Spot = require("./model/spot");
 
 const app = express();
 
 app.use(express.json());
 
-app.post("/welcome", auth, (req, res) => {
-    res.status(200).send("Welcome 🙌 ");
+app.post("/testData", async (req, res) => {
+  // starting point -0.457846 46.3193722
+  // img src https://scontent.fbod1-1.fna.fbcdn.net/v/t39.30808-6/283147504_5412971338726901_539772652631939110_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=730e14&_nc_ohc=fOwCOmDUHyYAX_uzqOl&_nc_ht=scontent.fbod1-1.fna&oh=00_AT-mmykiK2f2yg36GhczgPncqY5ELILYlaapJBqitKwVGQ&oe=6297892A
+
+  // 46.317461, -0.452865
+  // 46.317905, -0.451703
+  // 46.317105, -0.451503
+  // 46.320757, -0.458514
+
+  let lat = 46.317461;
+  let lon = -0.452865;
+
+  for (let i=0; i<10; i++) {
+    // if (Math.random() < 0.5 ) {
+      lat-=0.0002
+      lon+=0.002
+    // } else {
+      // lat+=0.0002
+      // lon-=0.002
+    // }
+
+    // let spot = await Spot.create({
+    //   latitude: lat,
+    //   longitude: lon,
+    //   imgsrc: 'https://scontent.fbod1-1.fna.fbcdn.net/v/t39.30808-6/283147504_5412971338726901_539772652631939110_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=730e14&_nc_ohc=fOwCOmDUHyYAX_uzqOl&_nc_ht=scontent.fbod1-1.fna&oh=00_AT-mmykiK2f2yg36GhczgPncqY5ELILYlaapJBqitKwVGQ&oe=6297892A',
+    // });
+
+  }
+
+  var r = 1000/111300 // = 100 meters
+  , y0 = 46.317461
+  , x0 = -0.452865
+  , u = Math.random()
+  , v = Math.random()
+  , w = r * Math.sqrt(u)
+  , t = 2 * Math.PI * v
+  , x = w * Math.cos(t)
+  , y1 = w * Math.sin(t)
+  , x1 = x / Math.cos(y0)
+
+  newY = y0 + y1
+  newX = x0 + x1
+
+  let spot = await Spot.create({
+      latitude: newY,
+      longitude: newX,
+      imgsrc: 'https://scontent.fbod1-1.fna.fbcdn.net/v/t39.30808-6/283147504_5412971338726901_539772652631939110_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=730e14&_nc_ohc=fOwCOmDUHyYAX_uzqOl&_nc_ht=scontent.fbod1-1.fna&oh=00_AT-mmykiK2f2yg36GhczgPncqY5ELILYlaapJBqitKwVGQ&oe=6297892A',
+    });
+
+  console.log(newY + ", " + newX)
+
+  res.status(200).send(JSON.stringify("added successfully"));
+
+})
+
+app.get("/discover", auth, async (req, res) => {
+    const spot = await Spot.find({});
+    res.status(200).send(JSON.stringify(spot));
   });
 
 app.post("/register", async (req, res) => {
@@ -40,16 +97,15 @@ app.post("/register", async (req, res) => {
       // Create token
       const token = jwt.sign(
         { user_id: user._id, email },
-        process.env.TOKEN_KEY,
-        {
-          expiresIn: "2h",
-        }
+        process.env.TOKEN_KEY//,
+        // {
+        //   expiresIn: "2h",
+        // }
       );
       // save user token
       user.token = token;
   
       // return new user
-      console.log("test")
       console.log(user)
       res.status(201).json(user);
     } catch (err) {
@@ -72,10 +128,10 @@ app.post("/register", async (req, res) => {
         // Create token
         const token = jwt.sign(
           { user_id: user._id, email },
-          process.env.TOKEN_KEY,
-          {
-            expiresIn: "2h",
-          }
+          process.env.TOKEN_KEY//,
+          // {
+          //   expiresIn: "2h",
+          // }
         );
 
         console.log(token)

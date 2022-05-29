@@ -19,6 +19,10 @@
       <category android:name="android.intent.category.BROWSABLE" />
       <data android:scheme="https" />
     </intent>
+    <intent>
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="google.navigation" />
+    </intent>
   </queries>
 
   <application android:name=".MainApplication" android:label="@string/app_name" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round" android:allowBackup="false" android:theme="@style/AppTheme" android:usesCleartextTraffic="true">
@@ -31,6 +35,6 @@
       </intent-filter>
     </activity>
     <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" android:exported="false"/>
-    <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyDozXfrc2JTO53gkiwylEZlMgn7wi544PQ"/>
+    <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyBoQWlAOb8FDE-DcbFsm9XbuamFwVbvnsg"/>
   </application>
 </manifest>
